@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+# launch - choose packaged binary or fallback to source
+# Usage:
+#   ./launch [--no-gui] [--port 8000]
+# Environment:
+#   USE_SOURCE=1   -> force running source `app.py` even if `dist/launcher` exists
+#   NO_GUI=1 or --no-gui -> disable GUI
+
+DIR="$(cd "$(dirname "${0}")" && pwd)"
+cd "$DIR"
+
+# allow passing through args unchanged
+if [ -n "${USE_SOURCE-}" ] || [ ! -x "$DIR/dist/launcher" ]; then
+  if [ -f "$DIR/.venv/bin/activate" ]; then
+    # activate project venv if present
+    # shellcheck disable=SC1090
+    source "$DIR/.venv/bin/activate"
+  fi
+  exec python3 "$DIR/app.py" "$@"
+else
+  exec "$DIR/dist/launcher" "$@"
+fi
