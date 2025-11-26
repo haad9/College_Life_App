@@ -1,6 +1,5 @@
 from django.contrib import admin
-from django.contrib import admin
-from.models import UserProfile,Routine,Expense,Event,Goal
+from .models import UserProfile, Routine, Expense, Event, Goal
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):

@@ -1,6 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import UserProfileViewSet,RoutineViewSet,ExpenseViewSet,EventViewSet,GoalViewSet
+from .views import (
+    UserProfileViewSet, RoutineViewSet, ExpenseViewSet, 
+    EventViewSet, GoalViewSet, DatabaseHealthView
+)
 
 router = DefaultRouter()
 router.register(r'profiles', UserProfileViewSet, basename='profile')
@@ -11,4 +14,5 @@ router.register(r'goals', GoalViewSet, basename='goal')
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/health/database/', DatabaseHealthView.as_view(), name='database-health'),
 ]
